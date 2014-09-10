@@ -1,37 +1,33 @@
 #!/usr/bin/python
 
 
-import math
+class Reppity(object):
+    def longestRep(self, s):
+        maxx = 0
+        for i in range(len(s)):
+            for j in range(i + 1, len(s)):
+                if s[i] == s[j]:
+                    c = 1
+                    for k in range(j + 1, len(s)):
+                        if s[k] == s[i + c] and i + c < j:
+                            c += 1
+                        else:
+                            break
+                    if c > maxx:
+                        maxx = c
+        return maxx
 
 
-class ComputationalComplexity(object):
-    def fastestAlgo(self, c, p, l, n):
-        minind = 0
-        minv = 9999999999999999999
-        for i in range(len(c)):
-            x = c[i] * n**p[i] * math.log(n)**l[i]
-            if x < minv:
-                minv = x
-                minind = i
-        return minind
+class RedSquare(object):
+    def countTheEmptyReds(self, maxRank, maxFile, ranks, files):
+        black = (1 + maxFile) % 2
+        c = 0
+        pieces = zip(ranks, files)
+        for i in range(1, maxRank + 1):
+            for j in range(1, maxFile + 1):
+                if (i + j) % 2 != black and (i, j) not in pieces:
+                    c += 1
+        return c
 
 
-class Generators(object):
-    def find(self, p):
-        z = set([i for i in range(1, p)])
-        res = []
-        for i in range(2, p):
-            g = [1]
-            f = i
-            for j in range(1, p - 1):
-                g.append(f)
-                f *= i
-                f %= p
-            if set(g) == z:
-                res.append(i)
-        return res
-
-
-print Generators().find(937)
-
-
+print RedSquare().countTheEmptyReds(50, 50, [1], [1])
