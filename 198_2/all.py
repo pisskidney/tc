@@ -30,4 +30,34 @@ class RedSquare(object):
         return c
 
 
-print RedSquare().countTheEmptyReds(50, 50, [1], [1])
+class ComplexIntegers(object):
+    def prime(self, x):
+        if x in [2, 3]:
+            return True
+        for i in range(2, int(x**(1/2.0)) + 1):
+            if x % i == 0:
+                return False
+        return True
+
+    def classify(self, reals, ims):
+        res = []
+        for r, i in zip(reals, ims):
+            z = r**2 + i**2
+            if z == 0:
+                res.append('zero')
+            elif z == 1:
+                res.append('unit')
+            else:
+                r = abs(r)
+                i = abs(i)
+                if r == 0 or i == 0:
+                    if (self.prime(r) and r % 4 == 3) or (self.prime(i) and i % 4 == 3):
+                        res.append('prime')
+                    else:
+                        res.append('composite')
+                else:
+                    if self.prime(z):
+                        res.append('prime')
+                    else:
+                        res.append('composite')
+        return res
