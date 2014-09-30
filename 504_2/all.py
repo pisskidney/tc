@@ -87,6 +87,3 @@ class MathContest3(object):
                 inv = not inv
                 ans += 1
         return ans
-
-
-print MathContest3().countBlack('BW', 1)
