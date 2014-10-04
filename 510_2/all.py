@@ -24,15 +24,11 @@ class TheLuckyGameDivTwo:
         for i in xrange(a, b - jlen + 2):
             minn =  100
             for j in xrange(i, i + jlen - blen + 1):
-                minn = min(minn, v[j + blen - 1] - v[j - 1])
-            maxx = max(maxx, minn)
+                #minn = min(minn, v[j + blen - 1] - v[j - 1])
+                c = v[j + blen - 1] - v[j - 1]
+                if c < minn:
+                    minn = c
+            #maxx = max(maxx, minn)
+            if minn > maxx:
+                maxx = minn
         return maxx
-
-
-#print TheLuckyGameDivTwo().find(4, 8, 3, 2)
-#print '-' * 100
-#print TheLuckyGameDivTwo().find(1, 100, 100, 100)
-print TheLuckyGameDivTwo().find(1, 4747, 2825, 99)
-                
-
-            
