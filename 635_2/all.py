@@ -10,8 +10,6 @@ class QuadraticLaw:
         return 0
 
 
-
-
 class IdentifyingWood:
     def check(self, s, t):
         last = -1
@@ -26,69 +24,55 @@ class IdentifyingWood:
                 return 'Nope.'
         return "Yep, it's wood."
 
+from collections import deque
 
 class LonglongestPathTree:
-    def bfs(self, a, b, l, s):
-        from collections import deque
-        print s
-        q = deque([])
+    def bfs(self, edges, s):
+        q = []
         q.append(s)
         visited = []
-        go = [0 for _ in xrange(len(a) + 2)]
+        lens = [0 for _ in xrange(len(edges) + 2)]
         leafs = []
-        ffs = []
-        rara = 0
         while q:
             e = q.pop()
-            if e in ffs:
-                import pdb
-                pdb.set_trace()
-            else:
-                ffs.append(e)
-            print rara
-            rara += 1
-            ffs.append(e)
             leaf = True
-            for j in xrange(len(a)):
-                if a[j] == e and b[j] not in visited:
+            for x in edges[e]:
+                if x not in visited:
                     leaf = False
-                    q.appendleft(b[j])
-                    go[b[j]] = go[a[j]] + l[j]
-                elif b[j] == e and a[j] not in visited:
-                    leaf = False
-                    q.appendleft(a[j])
-                    go[a[j]] = go[b[j]] + l[j]
+                    q.append(x)
+                    lens[x] = lens[e] + edges[e][x]
                 visited.append(e)
             if leaf:
                 leafs.append(e)
-        return go, leafs
+        return lens, leafs
     
-    def longest(self, a, b, l, s):
-        go, leafs = self.bfs(a, b, l, s)
-        leafs = sorted(leafs, reverse=True, key=lambda x: go[x])
-        go, leafs = self.bfs(a, b, l, leafs[0])
-        return max(go)
+    def longest(self, e, s):
+        lens, leafs = self.bfs(e, s)
+        leafs = sorted(leafs, reverse=True, key=lambda x: lens[x])
+        lens, leafs = self.bfs(e, leafs[0])
+        return max(lens)
 
     def getLength(self, a, b, l):
+        e = {}
+        for i in range(len(a)):
+            e.setdefault(a[i], {})[b[i]] = l[i]
+            e.setdefault(b[i], {})[a[i]] = l[i]
+
         maxx = 0
         a = list(a)
         b = list(b)
         l = list(l)
 
-        for i in range(len(a)):
-            ax = a[:]
-            bx = b[:]
-            lx = l[:]
-            del a[i]
-            del b[i]
-            del l[i]
-
+        for i in xrange(len(a)):
+            del e[a[i]][b[i]]
+            del e[b[i]][a[i]]
             
-            maxx = max(self.longest(a, b, l, ax[i]) + self.longest(a, b, l, bx[i]) + lx[i], maxx)
+            x = self.longest(e, a[i]) + self.longest(e, b[i]) + l[i]
+            if x > maxx:
+                maxx = x
 
-            a = ax[:]
-            b = bx[:]
-            l = lx[:]
+            e[a[i]][b[i]] = l[i]
+            e[b[i]][a[i]] = l[i]
 
         return maxx
 
@@ -99,12 +83,7 @@ class LonglongestPathTree:
 
 #print LonglongestPathTree().getLength((0,2,0), (1, 0, 3), (2, 4, 8))
 #print LonglongestPathTree().getLength(( 0,1,0,3,0,6,7,7,8,9,11  ), ( 1,2,3,4,5,5,5,8,9,10,9   ), (100,1000,100,1000,1,10,10,10,10,100,100   ))
-'''
-( 0,1,0,3,0,6,7,7,8,9, 11  ), (
-  1,2,3,4,5,5,5,8,9,10,9   ), (
-  100,1000,100,1000,1,10,10,10,10,100,100   ))
 
-'''
 print LonglongestPathTree().getLength(( 
 601,399,1709,498,1585,4,660,49,1274,1898,1679,146,468,1432,22,1630,1558,345,1678,993,1964,1988,1642,1214,703,1838,1340,1989,954,76,473,458,948,802,658,1546,621,1951,660,77,130,213,1359,128,1012,759,1465,1912,1130,1944,1555,625,1257,558,312,640,1473,1270,73,1027,1881,1401,466,564,1677,1921,332,1284,1527,1169,480,930,73,
 858,1573,1624,1837,64,1699,725,70,1386,1314,781,1752,1051,142,810,311,186,1879,1945,1903,814,1285,630,112,1795,370,1923,358,756,21,954,45,896,1111,1018,298,371,613,135,450,693,1736,385,1751,432,10,574,1984,1464,653,464,126,672,915,618,1520,735,170,1914,849,1382,1628,1147,1618,1654,1266,1898,408,666,563,1977,231,945,1114,
