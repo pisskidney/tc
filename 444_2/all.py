@@ -28,4 +28,24 @@ class FourBlocksEasy():
         return ans
 
 
-print FourBlocksEasy().maxScore(("..1.....1.....1.....1........1...1.1....1...", "1........1....1..1.....1......1..11..11....."))
+class NumericalPerfectionLevel():
+    def getLevel(self, n):
+        divs = []
+        k = 2
+        x = n
+        while k * k <= x:
+            while x % k == 0:
+                x /= k
+                divs.append(k)
+            k += 1
+        if x > 1:
+            divs.append(x)
+
+        k = 0
+        while 4**(k+1) <= len(divs):
+            k += 1
+
+        return k
+
+
+print NumericalPerfectionLevel().getLevel(9998667712489)
