@@ -31,13 +31,16 @@ class FourBlocksEasy():
 class NumericalPerfectionLevel():
     def getLevel(self, n):
         divs = []
-        k = 2
+        k = 3
         x = n
+        while x % 2 == 0:
+            x /= 2
+            divs.append(2)
         while k * k <= x:
             while x % k == 0:
                 x /= k
                 divs.append(k)
-            k += 1
+            k += 2
         if x > 1:
             divs.append(x)
 
