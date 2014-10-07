@@ -32,25 +32,24 @@ class LonglongestPathTree:
         q.append(s)
         visited = []
         lens = [0 for _ in xrange(len(edges) + 2)]
-        leafs = []
+        maxv = 0
+        maxl = 0
         while q:
             e = q.pop()
-            leaf = True
             for x in edges[e]:
                 if x not in visited:
-                    leaf = False
                     q.append(x)
                     lens[x] = lens[e] + edges[e][x]
+                    if lens[x] > maxl:
+                        maxl = lens[x]
+                        maxv = x
                 visited.append(e)
-            if leaf:
-                leafs.append(e)
-        return lens, leafs
+        return maxv, maxl
     
     def longest(self, e, s):
-        lens, leafs = self.bfs(e, s)
-        leafs = sorted(leafs, reverse=True, key=lambda x: lens[x])
-        lens, leafs = self.bfs(e, leafs[0])
-        return max(lens)
+        maxv, _ = self.bfs(e, s)
+        maxv, maxl = self.bfs(e, maxv)
+        return maxl
 
     def getLength(self, a, b, l):
         e = {}
@@ -64,6 +63,9 @@ class LonglongestPathTree:
         l = list(l)
 
         for i in xrange(len(a)):
+            print i
+            if i == 50:
+                return
             del e[a[i]][b[i]]
             del e[b[i]][a[i]]
             
