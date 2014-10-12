@@ -24,15 +24,15 @@ class IdentifyingWood:
                 return 'Nope.'
         return "Yep, it's wood."
 
-from collections import deque
 
 class LonglongestPathTree:
     def bfs(self, edges, s):
-        q = []
-        q.append(s)
-        visited = []
+        if not edges[s]:
+            return -1, 0
+        q = [s]
+        visited = {}
         lens = [0 for _ in xrange(len(edges) + 2)]
-        maxv = 0
+        maxv = -1
         maxl = 0
         while q:
             e = q.pop()
@@ -43,11 +43,13 @@ class LonglongestPathTree:
                     if lens[x] > maxl:
                         maxl = lens[x]
                         maxv = x
-                visited.append(e)
+                visited[e] = 1
         return maxv, maxl
     
     def longest(self, e, s):
         maxv, _ = self.bfs(e, s)
+        if maxv == -1:
+            return 0
         maxv, maxl = self.bfs(e, maxv)
         return maxl
 
@@ -63,9 +65,6 @@ class LonglongestPathTree:
         l = list(l)
 
         for i in xrange(len(a)):
-            print i
-            if i == 50:
-                return
             del e[a[i]][b[i]]
             del e[b[i]][a[i]]
             
