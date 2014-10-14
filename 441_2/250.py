@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-class DifferentStrings(object):
+class DifferentStrings2(object):
     def minimize(self, A, B):
         min_dif = 99999
         while len(B) >= len(A):
@@ -16,6 +16,19 @@ class DifferentStrings(object):
             if A[i] != B[i] and A[i] != ' ':
                 c += 1
         return c
+
+
+class DifferentStrings(object):
+    def minimize(self, a, b):
+        mindiff = len(a)
+        for i in xrange(len(b) - len(a) + 1):
+            c = 0
+            for j in xrange(len(a)):
+                if a[j] != b[j+i]:
+                    c += 1
+            mindiff = min(mindiff, c)
+        return mindiff
+
 
 ds = DifferentStrings()
 print 2, ds.minimize('adaabc', 'aababbc')
