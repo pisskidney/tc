@@ -16,3 +16,22 @@ class PalindromizationDiv2(object):
             if self.pal(n1) or self.pal(n2):
                 return i
         return -1
+
+
+class LuckyRemainder(object):
+    def getLuckyRemainder(self, x):
+        z = x % 9
+        if z < 5:
+            return x % 9 * 2
+        return {5: 1, 6: 3, 7: 5, 8:7}[z]
+    
+Class:
+    LuckyRemainder
+    Method:
+        getLuckyRemainder
+        Parameters:
+            string
+            Returns:
+                integer
+                Method signature:
+                    def getLuckyRemainder(self, X):
