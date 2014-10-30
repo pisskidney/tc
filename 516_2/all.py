@@ -13,6 +13,19 @@ class NetworkXZeroOne():
                         chars[i] = 'x' if chars[i + 1] == 'o' else 'o'
         return ''.join(chars)
                 
-            
-print NetworkXZeroOne().reconstruct('o??x??o')
 
+from collections import defaultdict
+class NetworkXOneTimePad():
+    def crack(self, p, c):
+        res = 0
+        keys = defaultdict(int)
+        for i in xrange(len(p)):
+            for j in xrange(len(c)):
+                k = ''.join([str(int(p[i][q]) ^ int(c[j][q])) for q in xrange(len(p[0]))])
+                keys[k] += 1
+        for v in keys.values():
+            if v == len(c):
+                res += 1
+        return res
+
+print NetworkXOneTimePad().crack(
