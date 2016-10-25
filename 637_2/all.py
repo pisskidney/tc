@@ -9,6 +9,7 @@ class GreaterGameDiv2():
                 c += 1
         return c
 
+
 class PathGameDiv2():
     def calc(self, b):
         row1 = b[0].find('#')
@@ -28,6 +29,10 @@ class PathGameDiv2():
 
             col += 1
         return c
+
+
+
+
                 
 print PathGameDiv2().calc(('.', '#'))
 

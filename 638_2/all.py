@@ -9,7 +9,7 @@ class NamingConvention():
         return ''.join(words)
 
 
-class NarrowPassage2Easy():
+class NarrowPassage2Easy2():
     def count(self, size, maxsize):
         c = 1
         if len(size) == 1:
@@ -25,7 +25,23 @@ class NarrowPassage2Easy():
                         visited.add(new)
                         q.append(new)
                         c += 1
+        print visited
         return c
 
 
-print NarrowPassage2Easy().count((1,), 100)
+class NarrowPassage2Easy():
+    def count(self, arr, max_):
+        n=[1]*len(arr)
+        prev=arr[0]
+        for i in range(len(arr)):
+            for j in range(i+1,len(arr)):
+                if arr[j]+arr[i]<=max_:
+                    n[i-1]=n[i-1]+1
+                else:
+                    break
+        q = 1
+        for i in n:
+            q=q*i
+        return q
+
+print NarrowPassage2Easy().count((1,2,3,1,1,1), 42)
